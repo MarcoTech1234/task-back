@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: taskmanager
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task
+    username: task
+    password: task
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+  cache:
+    type: redis
+
+springdoc:
+  swagger-ui:
+    path: /docs
