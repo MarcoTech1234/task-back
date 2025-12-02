@@ -157,4 +157,38 @@ public class TaskController {
                 perPage
         );
     }
+
+    @Operation(
+            summary = "Deletar",
+            description = "Deletar uma tarefa",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Delete feito com sucesso"),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Tarefa não encontrado",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorResponse.class),
+                                    examples = @ExampleObject(
+                                            name = "TaskNotFoundExample",
+                                            value = """
+                                                    {
+                                                      "requestId": "123e4567-e89b-12d3-a456-426614174000",
+                                                      "timestamp": "2025-12-02T12:34:56.789+00:00",
+                                                      "status": 404,
+                                                      "error": "Not Found",
+                                                      "message": "Tarefa não encontrada",
+                                                      "path": "/task/99"
+                                                    }
+                                                    """
+                                    )
+                            )
+                    )
+            }
+    )
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteTask(@PathVariable Long id) {
+        taskService.deleteById(id);
+        return "Tarefa deletada com sucesso";
+    }
 }

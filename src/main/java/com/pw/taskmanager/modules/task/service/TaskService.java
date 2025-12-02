@@ -159,4 +159,10 @@ public class TaskService {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
+
+    public void deleteById(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(NotFoundTask::new);
+        taskRepository.delete(task);
+    }
 }
