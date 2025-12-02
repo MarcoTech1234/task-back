@@ -105,6 +105,7 @@ public class TaskService {
             Status status,
             Priority priority,
             String nome,
+            Long categoryId,
             String data,
             int page,
             int perPage
@@ -113,7 +114,7 @@ public class TaskService {
         int pageIndex = Math.max(0, page - 1);
         Pageable pageable = PageRequest.of(pageIndex, perPage, Sort.by("id").ascending());
 
-        Specification<Task> spec = getTaskSpecification(status, priority, nome, data);
+        Specification<Task> spec = getTaskSpecification(status, priority, categoryId, nome, data);
 
         Page<Task> result = taskRepository.findAll(spec, pageable);
 
@@ -136,6 +137,7 @@ public class TaskService {
     private static Specification<Task> getTaskSpecification(
             Status status,
             Priority priority,
+            Long categoryId,
             String nome,
             String data
     ) {
@@ -150,6 +152,10 @@ public class TaskService {
             // filtro por priority (enum)
             if (priority != null) {
                 predicates.add(cb.equal(root.get("priority"), priority));
+            }
+
+            if (categoryId != null) {
+                predicates.add(cb.equal(root.get("category").get("id"), categoryId));
             }
 
             // filtro por nome (contains, case-insensitive)

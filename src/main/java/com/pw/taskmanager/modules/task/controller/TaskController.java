@@ -143,6 +143,7 @@ public class TaskController {
             @Parameter(description = "Filtrar por prioridade da tarefa")
             @RequestParam(required = false) Priority priority,
             @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long categoryId,
             @Parameter(description = "Filtrar pela data exata (yyyy-MM-dd)")
             @RequestParam(required = false) String data,
             @RequestParam(required = false, defaultValue = "1") Integer page,
@@ -152,6 +153,7 @@ public class TaskController {
                 status,
                 priority,
                 name,
+                categoryId,
                 data,
                 page,
                 perPage
