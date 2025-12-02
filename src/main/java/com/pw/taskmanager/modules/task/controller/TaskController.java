@@ -146,6 +146,8 @@ public class TaskController {
             @RequestParam(required = false) Long categoryId,
             @Parameter(description = "Filtrar pela data exata (yyyy-MM-dd)")
             @RequestParam(required = false) String data,
+            @RequestParam(required = false, defaultValue = "data") String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String sortDir,
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "20") Integer perPage
     ) {
@@ -156,7 +158,9 @@ public class TaskController {
                 categoryId,
                 data,
                 page,
-                perPage
+                perPage,
+                sortBy,
+                sortDir
         );
     }
 

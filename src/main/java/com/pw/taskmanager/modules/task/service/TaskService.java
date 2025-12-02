@@ -108,11 +108,20 @@ public class TaskService {
             Long categoryId,
             String data,
             int page,
-            int perPage
+            int perPage,
+            String sortBy,    // novo: "id" | "data" | "category" | outro campo
+            String sortDir
     )
     {
         int pageIndex = Math.max(0, page - 1);
-        Pageable pageable = PageRequest.of(pageIndex, perPage, Sort.by("id").ascending());
+
+        // Normaliza sort
+        String sortProperty = (sortBy == null || sortBy.isBlank()) ? "id" : sortBy.trim();
+        boolean descending = "desc".equalsIgnoreCase(sortDir);
+
+        Sort sort = Sort.by(descending ? Sort.Direction.DESC : Sort.Direction.ASC, sortProperty);
+
+        Pageable pageable = PageRequest.of(pageIndex, perPage, sort);
 
         Specification<Task> spec = getTaskSpecification(status, priority, categoryId, nome, data);
 

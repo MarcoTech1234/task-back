@@ -26,11 +26,11 @@ spring:
     bootstrap-servers: localhost:29092
 
   mail:
-    to: teste
+    to: eduardomaster.tellis@gmail.com
     host: smtp.gmail.com
     port: 587
-    username: teste
-    password: teste
+    username: tcchostphpmail@gmail.com
+    password: ggxufhhgpihatdeb
     properties:
       mail:
         smtp:
