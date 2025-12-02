@@ -7,28 +7,26 @@ import java.util.List;
 
 @Schema(name = "ErrorResponse", description = "Formato padrão de resposta de erro")
 public class ErrorResponse {
-
-    @Schema(description = "ID de correlação da requisição", example = "56a9f7f6-...")
+    @Schema(description = "ID de correlação da requisição")
     private String requestId;
 
-    @Schema(description = "Timestamp do erro", example = "2025-12-02T12:34:56.789+00:00")
+    @Schema(description = "Timestamp do erro")
     private OffsetDateTime timestamp;
 
-    @Schema(description = "Código HTTP", example = "404")
+    @Schema(description = "Código HTTP")
     private int status;
 
-    @Schema(description = "Texto do status HTTP", example = "Not Found")
+    @Schema(description = "Texto do status HTTP")
     private String error;
 
-    @Schema(description = "Mensagem legível do erro", example = "Categoria não encontrada")
+    @Schema(description = "Mensagem legível do erro")
     private String message;
 
-    @Schema(description = "Caminho da requisição", example = "/category/1")
+    @Schema(description = "Caminho da requisição")
     private String path;
 
     @Schema(description = "Erros de campo (quando aplicável)")
     private List<FieldError> errors;
-
     // construtores/getters/setters (pode gerar com Lombok se preferir)
     public ErrorResponse() {}
 
