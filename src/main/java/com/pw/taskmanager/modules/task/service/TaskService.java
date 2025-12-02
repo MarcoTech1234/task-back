@@ -24,10 +24,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,11 +38,13 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final CategoryRepository categoryRepository;
     private final TaskMapper taskMapper;
+    private final KafkaTemplate<String, TaskResponseDto> kafkaTemplate;
 
-    public TaskService(TaskRepository taskRepository, CategoryRepository categoryRepository, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository, CategoryRepository categoryRepository, TaskMapper taskMapper, KafkaTemplate<String, TaskResponseDto> kafkaTemplate) {
         this.taskRepository = taskRepository;
         this.categoryRepository = categoryRepository;
         this.taskMapper = taskMapper;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     public TaskResponseDto createTask(TaskDto taskDto) {
@@ -75,10 +79,17 @@ public class TaskService {
         existingTask.toUpdate(taskDto);
         Task taskUpdate = taskRepository.save(existingTask);
 
+
         Category category = taskUpdate.getCategory();
         CategoryResponseDto catDto = new CategoryResponseDto(category.getId(), category.getNome());
-        return new TaskResponseDto(taskUpdate.getId(), taskUpdate.getNome(), taskUpdate.getDescricao(),
+        TaskResponseDto taskResponseDto = new TaskResponseDto(taskUpdate.getId(), taskUpdate.getNome(), taskUpdate.getDescricao(),
                 taskUpdate.getData(), taskUpdate.getStatus(), taskUpdate.getPriority(), catDto);
+
+        if (taskUpdate.getStatus() == Status.FEITO) {
+            kafkaTemplate.send("email-processor", null, taskResponseDto);
+        }
+
+        return taskResponseDto;
     }
 
     public TaskResponseDto getTask(Long id) {

@@ -10,11 +10,27 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
   cache:
     type: redis
+
+  kafka:
+    bootstrap-servers: localhost:29092
+
+  mail:
+    to: eduardomaster.tellis@gmail.com
+    host: smtp.gmail.com
+    port: 587
+    username: tcchostphpmail@gmail.com
+    password: ggxufhhgpihatdeb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 springdoc:
   api-docs:
