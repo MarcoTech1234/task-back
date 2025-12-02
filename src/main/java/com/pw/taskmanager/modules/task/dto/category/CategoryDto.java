@@ -1,6 +1,5 @@
-package com.pw.taskmanager.modules.task.dto;
+package com.pw.taskmanager.modules.task.dto.category;
 
-import com.pw.taskmanager.modules.task.enums.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

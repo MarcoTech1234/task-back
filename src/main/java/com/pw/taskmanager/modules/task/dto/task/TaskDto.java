@@ -1,5 +1,6 @@
-package com.pw.taskmanager.modules.task.dto;
+package com.pw.taskmanager.modules.task.dto.task;
 
+import com.pw.taskmanager.modules.task.enums.Priority;
 import com.pw.taskmanager.modules.task.enums.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -42,6 +43,20 @@ public record TaskDto(
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
         Status status,
+
+        @NotNull(message = "prioridade não pode ser vazio")
+        @Schema(
+                description = "Prioridade da Tarefa",
+                example = "BAIXA",
+                allowableValues = {
+                        "BAIXA",
+                        "MEDIA",
+                        "ALTA",
+                        "CRITICA"
+                },
+                requiredMode = Schema.RequiredMode.REQUIRED
+        )
+        Priority priority,
 
         @NotNull(message = "id de categoria não pode ser vazio")
         @Schema(

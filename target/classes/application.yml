@@ -17,5 +17,8 @@ spring:
     type: redis
 
 springdoc:
+  api-docs:
+    path: /v3/api-docs
   swagger-ui:
-    path: /docs
+    path: /swagger-ui.html
+  packages-to-scan: com.pw.taskmanager.modules.task.controller,com.pw.taskmanager.modules.shared.presentation

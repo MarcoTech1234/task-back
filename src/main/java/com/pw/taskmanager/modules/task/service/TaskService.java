@@ -2,7 +2,7 @@ package com.pw.taskmanager.modules.task.service;
 
 import com.pw.taskmanager.modules.task.controller.response.CategoryResponseDto;
 import com.pw.taskmanager.modules.task.controller.response.TaskResponseDto;
-import com.pw.taskmanager.modules.task.dto.TaskDto;
+import com.pw.taskmanager.modules.task.dto.task.TaskDto;
 import com.pw.taskmanager.modules.task.entities.Task;
 import com.pw.taskmanager.modules.task.entities.Category;
 import com.pw.taskmanager.modules.task.errors.NotFoundCategory;
@@ -23,8 +23,7 @@ public class TaskService {
 
     public TaskResponseDto createTask(TaskDto taskDto) {
         Category category = categoryRepository.findById(taskDto.categoryId())
-                .orElseThrow(() -> new NotFoundCategory(
-                        "Categoria não encontrada com id: " + taskDto.categoryId()));
+                .orElseThrow(NotFoundCategory::new);
 
         Task task = new Task();
         task.setNome(taskDto.nome());
@@ -37,6 +36,6 @@ public class TaskService {
         Task taskCreate = taskRepository.save(task);
         CategoryResponseDto catDto = new CategoryResponseDto(category.getId(), category.getNome());
         return new TaskResponseDto(taskCreate.getId(), taskCreate.getNome(), taskCreate.getDescricao(),
-                taskCreate.getData(), taskCreate.getStatus(), catDto);
+                taskCreate.getData(), taskCreate.getStatus(), taskCreate.getPriority(), catDto);
     }
 }

@@ -1,7 +1,7 @@
 package com.pw.taskmanager.modules.task.controller;
 
 import com.pw.taskmanager.modules.task.controller.response.TaskResponseDto;
-import com.pw.taskmanager.modules.task.dto.TaskDto;
+import com.pw.taskmanager.modules.task.dto.task.TaskDto;
 import com.pw.taskmanager.modules.task.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

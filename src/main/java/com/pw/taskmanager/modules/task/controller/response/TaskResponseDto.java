@@ -1,5 +1,6 @@
 package com.pw.taskmanager.modules.task.controller.response;
 
+import com.pw.taskmanager.modules.task.enums.Priority;
 import com.pw.taskmanager.modules.task.enums.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -15,6 +16,8 @@ public record TaskResponseDto(
         String data,
         @Schema(description = "Status da Tarefa", example = "PENDENTE")
         Status status,
+        @Schema(description = "", example = "BAIXA")
+        Priority priority,
         CategoryResponseDto category
 ) {
 }

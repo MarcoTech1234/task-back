@@ -1,9 +1,11 @@
 package com.pw.taskmanager.modules.task.errors;
 
-import java.util.NoSuchElementException;
+import com.pw.taskmanager.modules.shared.errors.ApplicationException;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-public class NotFoundCategory extends NoSuchElementException {
-    public NotFoundCategory(String mgs) {
-        super(mgs);
+
+public class NotFoundCategory extends ApplicationException {
+    public NotFoundCategory() {
+        super("Categoria não encontrada", 404);
     }
 }

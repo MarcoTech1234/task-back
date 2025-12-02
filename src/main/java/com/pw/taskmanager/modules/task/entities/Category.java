@@ -1,5 +1,6 @@
 package com.pw.taskmanager.modules.task.entities;
 
+import com.pw.taskmanager.modules.task.dto.category.CategoryUpdateDto;
 import com.pw.taskmanager.modules.task.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,8 @@ public class Category {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Task> tasks;
 
+    public void toUpdate(CategoryUpdateDto category) {
+        if (category.nome() != null)
+            this.nome = category.nome().trim();
+    }
 }

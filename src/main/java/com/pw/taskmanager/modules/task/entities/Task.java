@@ -1,5 +1,6 @@
 package com.pw.taskmanager.modules.task.entities;
 
+import com.pw.taskmanager.modules.task.enums.Priority;
 import com.pw.taskmanager.modules.task.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class Task {
     private String descricao;
     private String data;
     private Status status;
+    private Priority priority;
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
