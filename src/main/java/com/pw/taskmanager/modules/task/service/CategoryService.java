@@ -13,6 +13,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,7 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
+    @CachePut(value = "CATEGORY_CACHE", key = "#result.id()")
     public CategoryResponseDto createCategory(CategoryDto categoryDto) {
         Category category = new Category();
         category.setNome(categoryDto.nome());
@@ -39,6 +43,7 @@ public class CategoryService {
         return new CategoryResponseDto(save.getId(), save.getNome());
     }
 
+    @CachePut(value = "CATEGORY_CACHE", key = "#result.id()")
     public CategoryResponseDto updateCategory(Long id, CategoryUpdateDto categoryUpdateDto) {
         Category existing = categoryRepository.findById(id)
                 .orElseThrow(NotFoundCategory::new);
@@ -49,6 +54,7 @@ public class CategoryService {
         return new CategoryResponseDto(saved.getId(), saved.getNome());
     }
 
+    @Cacheable(value = "CATEGORY_CACHE", key = "#id")
     public CategoryResponseDto getCategoryById(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(NotFoundCategory::new);
@@ -111,6 +117,7 @@ public class CategoryService {
         };
     }
 
+    @CacheEvict(value = "CATEGORY_CACHE", key = "#id")
     public void deleteById(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(NotFoundCategory::new);
