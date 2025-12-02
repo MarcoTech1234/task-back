@@ -75,7 +75,7 @@ public class CategoryController {
 
     @Operation(
             summary = "Listar Categoria",
-            description = "Listar uma Categoria Existente",
+            description = "Listar uma Categoria",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Listar feita com sucesso"),
             }
@@ -89,5 +89,21 @@ public class CategoryController {
             @RequestParam(required = false, defaultValue = "20") Integer perPage
     ){
         return categoryService.findMany(name, search, page, perPage);
+    }
+
+    @Operation(
+            summary = "Deletar",
+            description = "Deletar uma categoria",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Delete feito com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            }
+    )
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteCategory(@PathVariable Long id){
+        categoryService.deleteById(id);
+        return "Categoria deletada com sucesso";
     }
 }
