@@ -52,6 +52,7 @@ public class TaskService {
         task.setDescricao(taskDto.descricao());
         task.setData(taskDto.data() != null ? taskDto.data().toString() : null);
         task.setStatus(taskDto.status());
+        task.setPriority(taskDto.priority());
         task.setCategory(category);
 
         // salva e retorna
